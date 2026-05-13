@@ -1,0 +1,34 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#minecraft:is_badlands",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_forest",
+      "required": false
+    },
+    "forest",
+    "taiga",
+    {
+      "id": "#minecraft:is_jungle",
+      "required": false
+    },
+    "birch_forest",
+    {
+      "id": "#minecraft:is_savanna",
+      "required": false
+    },
+    "plains",
+    {
+      "id": "#minecraft:stronghold_biased_to",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_taiga",
+      "required": false
+    },
+    "flower_forest"
+  ]
+}

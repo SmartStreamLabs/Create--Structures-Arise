@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "createstructuresarise.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.create_structures_arise.refmap.json",
+  "mixins": [
+    "ChunkGeneratorStructureStateMixin",
+    "PoolElementStructurePieceMixin",
+    "StructurePlacementAccessor",
+    "StructureDebugMixin",
+    "StructureTemplateMixin"
+  ],
+  "client": [],
+  "minVersion": "0.8"
+}

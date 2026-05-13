@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#minecraft:is_mountain",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_hill",
+      "required": false
+    },
+    {
+      "id": "#c:is_mountain",
+      "required": false
+    },
+    {
+      "id": "#c:mountains",
+      "required": false
+    },
+    {
+      "id": "#c:is_hill",
+      "required": false
+    },
+    {
+      "id": "#c:hills",
+      "required": false
+    },
+    {
+      "id": "#c:is_peak",
+      "required": false
+    },
+    {
+      "id": "#c:peaks",
+      "required": false
+    },
+    {
+      "id": "#c:is_cliff",
+      "required": false
+    },
+    {
+      "id": "#c:cliffs",
+      "required": false
+    },
+    "minecraft:jagged_peaks",
+    "minecraft:frozen_peaks",
+    "minecraft:stony_peaks",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_gravelly_hills",
+    "minecraft:windswept_forest",
+    "minecraft:grove",
+    "minecraft:snowy_slopes"
+  ]
+}

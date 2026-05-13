@@ -1,0 +1,39 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#minecraft:is_forest",
+      "required": false
+    },
+    "forest",
+    {
+      "id": "#minecraft:is_jungle",
+      "required": false
+    },
+    {
+      "id": "#minecraft:snow_golem_melts",
+      "required": false
+    },
+    "plains",
+    {
+      "id": "#minecraft:is_taiga",
+      "required": false
+    },
+    "cherry_grove",
+    "beach",
+    {
+      "id": "#minecraft:is_hill",
+      "required": false
+    },
+    "sparse_jungle",
+    {
+      "id": "#minecraft:is_savanna",
+      "required": false
+    },
+    "flower_forest",
+    {
+      "id": "#minecraft:is_beach",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#tectonic:mountains",
+      "required": false
+    },
+    {
+      "id": "#tectonic:mountain_biomes",
+      "required": false
+    },
+    {
+      "id": "#tectonic:hills",
+      "required": false
+    },
+    {
+      "id": "#tectonic:cliffs",
+      "required": false
+    },
+    {
+      "id": "#tectonic:peaks",
+      "required": false
+    },
+    {
+      "id": "#tectonic:extreme_terrain",
+      "required": false
+    },
+    {
+      "id": "#tectonic:skylands",
+      "required": false
+    }
+  ]
+}

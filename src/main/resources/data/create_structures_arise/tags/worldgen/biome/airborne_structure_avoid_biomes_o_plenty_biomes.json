@@ -1,0 +1,45 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#biomesoplenty:is_mountain",
+      "required": false
+    },
+    {
+      "id": "#biomesoplenty:mountains",
+      "required": false
+    },
+    {
+      "id": "#biomesoplenty:cliffs",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:crag",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:highland",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:jade_cliffs",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:mountain",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:mountain_foothills",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:volcano",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:hot_springs",
+      "required": false
+    }
+  ]
+}
