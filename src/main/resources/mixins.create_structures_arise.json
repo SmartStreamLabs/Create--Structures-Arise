@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "createstructuresarise.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "refmap": "mixins.create_structures_arise.refmap.json",
   "mixins": [
     "ChunkGeneratorStructureStateMixin",

@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[4,)"
 license="MIT License"
 
 [[mods]]
@@ -7,24 +7,24 @@ modId="create_structures_arise"
 version="175.48.47"
 displayName="Create: Structures Arise"
 displayURL="https://www.curseforge.com/members/smartstreamlabs_studios/projects"
-logoFile="logo.png"
 credits="Team SmartStreamLabs"
 authors="SmartStreamLabs"
-description="\u00A7eComplete your world with create: structures arise. more create loot for you to enjoy!  See also: https://www.curseforge.com/minecraft/mc-mods/create-sky-village | "
+description="Complete your world with create: structures arise. more create loot for you to enjoy!"
 
 [[mixins]]
 config="mixins.create_structures_arise.json"
 
 [[dependencies.create_structures_arise]]
-    modId="forge"
-    mandatory=true
-    versionRange="[47.4.0,)"
-    ordering="AFTER"
+    modId="neoforge"
+    type="required"
+    versionRange="[26.2,)"
+    ordering="NONE"
     side="BOTH"
 
 [[dependencies.create_structures_arise]]
     modId="minecraft"
-    mandatory=true
-    versionRange="[1.20.1]"
-    ordering="AFTER"
+    type="required"
+    versionRange="[26.2,27)"
+    ordering="NONE"
     side="BOTH"
+

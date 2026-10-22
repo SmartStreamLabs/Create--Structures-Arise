@@ -1,23 +1,23 @@
 package createstructuresarise.worldgen;
 
 import createstructuresarise.CreateStructuresAriseMod;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 
 public final class StructureGenerationContext {
-	private static final ThreadLocal<ResourceLocation> CURRENT_DIMENSION = new ThreadLocal<>();
-	private static final ThreadLocal<ResourceLocation> CURRENT_TEMPLATE = new ThreadLocal<>();
+	private static final ThreadLocal<Identifier> CURRENT_DIMENSION = new ThreadLocal<>();
+	private static final ThreadLocal<Identifier> CURRENT_TEMPLATE = new ThreadLocal<>();
 
 	private StructureGenerationContext() {
 	}
 
-	public static void setDimension(ResourceLocation dimension) {
+	public static void setDimension(Identifier dimension) {
 		CURRENT_DIMENSION.set(dimension);
 	}
 
-	public static ResourceLocation getDimension() {
-		ResourceLocation dimension = CURRENT_DIMENSION.get();
-		return dimension != null ? dimension : net.minecraft.world.level.Level.OVERWORLD.location();
+	public static Identifier getDimension() {
+		Identifier dimension = CURRENT_DIMENSION.get();
+		return dimension != null ? dimension : net.minecraft.world.level.Level.OVERWORLD.identifier();
 	}
 
 	public static void clear() {
@@ -40,10 +40,10 @@ public final class StructureGenerationContext {
 			}
 			end++;
 		}
-		CURRENT_TEMPLATE.set(new ResourceLocation(CreateStructuresAriseMod.MODID, value.substring(start, end)));
+		CURRENT_TEMPLATE.set(Identifier.fromNamespaceAndPath(CreateStructuresAriseMod.MODID, value.substring(start, end)));
 	}
 
-	public static ResourceLocation getTemplate() {
+	public static Identifier getTemplate() {
 		return CURRENT_TEMPLATE.get();
 	}
 
