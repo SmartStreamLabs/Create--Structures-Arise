@@ -10,7 +10,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -34,7 +34,7 @@ public abstract class StructureDebugMixin {
 
 	@Shadow
 	@Final
-	private Optional<ResourceLocation> startJigsawName;
+	private Optional<Identifier> startJigsawName;
 
 	@Shadow
 	@Final
@@ -46,8 +46,8 @@ public abstract class StructureDebugMixin {
 
 	@Inject(method = "findGenerationPoint", at = @At("HEAD"), cancellable = true)
 	private void createStructuresArise$logJigsawSelection(Structure.GenerationContext context, CallbackInfoReturnable<Optional<Structure.GenerationStub>> cir) {
-		Registry<Structure> structureRegistry = context.registryAccess().registryOrThrow(Registries.STRUCTURE);
-		ResourceLocation structureId = structureRegistry.getKey((Structure) (Object) this);
+		Registry<Structure> structureRegistry = context.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+		Identifier structureId = structureRegistry.getKey((Structure) (Object) this);
 		if (structureId == null || !CreateStructuresAriseMod.MODID.equals(structureId.getNamespace())) {
 			return;
 		}
@@ -62,10 +62,10 @@ public abstract class StructureDebugMixin {
 				.orElse("not_projected");
 		Holder<Biome> biome = context.biomeSource()
 				.getNoiseBiome(QuartPos.fromBlock(sampleX), QuartPos.fromBlock(sampledStartY), QuartPos.fromBlock(sampleZ), context.randomState().sampler());
-		Registry<Biome> biomeRegistry = context.registryAccess().registryOrThrow(Registries.BIOME);
-		ResourceLocation biomeId = biomeRegistry.getKey(biome.value());
-		String poolId = this.startPool.unwrapKey().map(key -> key.location().toString()).orElse("<unregistered>");
-		ResourceLocation dimensionId = StructureGenerationContext.getDimension();
+		Registry<Biome> biomeRegistry = context.registryAccess().lookupOrThrow(Registries.BIOME);
+		Identifier biomeId = biomeRegistry.getKey(biome.value());
+		String poolId = this.startPool.unwrapKey().map(key -> key.identifier().toString()).orElse("<unregistered>");
+		Identifier dimensionId = StructureGenerationContext.getDimension();
 		TerrainSample terrainSample = CreateStructuresAriseServerConfig.isAirborneStructure(structureId) ? sampleTerrain(context, sampleX, sampleZ) : null;
 		BlockDecision decision = CreateStructuresAriseServerConfig.canGenerate(structureId, dimensionId, biome, biomeRegistry, terrainSample);
 
@@ -104,7 +104,7 @@ public abstract class StructureDebugMixin {
 					terrainSample != null ? terrainSample.minHeight() : "not_sampled",
 					terrainSample != null ? terrainSample.maxHeight() : "not_sampled",
 					poolId,
-					this.startJigsawName.map(ResourceLocation::toString).orElse("<none>"),
+					this.startJigsawName.map(Identifier::toString).orElse("<none>"),
 					decision.reason());
 		}
 	}

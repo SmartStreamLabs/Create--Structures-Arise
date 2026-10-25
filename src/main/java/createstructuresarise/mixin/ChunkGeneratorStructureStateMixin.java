@@ -6,7 +6,7 @@ import createstructuresarise.config.DynamicRandomSpreadStructurePlacement;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.levelgen.RandomState;
@@ -33,7 +33,7 @@ public abstract class ChunkGeneratorStructureStateMixin {
 		for (Holder<StructureSet> holder : this.possibleStructureSets) {
 			StructureSet set = holder.value();
 			if (set.structures().size() == 1 && set.placement() instanceof RandomSpreadStructurePlacement placement) {
-				ResourceLocation structureId = set.structures().get(0).structure().unwrapKey().map(key -> key.location()).orElse(null);
+				Identifier structureId = set.structures().get(0).structure().unwrapKey().map(key -> key.identifier()).orElse(null);
 				if (structureId != null && CreateStructuresAriseMod.MODID.equals(structureId.getNamespace()) && CreateStructuresAriseServerConfig.defaults().containsKey(structureId)) {
 					wrapped.add(Holder.direct(new StructureSet(
 							set.structures(),

@@ -9,12 +9,12 @@ import java.util.Locale;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 public final class BrassAgeCompatibility {
 	private static final Set<String> BRASS_AGE_MOD_IDS = Set.of("brass_age", "brassage", "the_brass_age", "brass-age");
@@ -71,7 +71,7 @@ public final class BrassAgeCompatibility {
 			return info;
 		}
 
-		ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(info.state().getBlock());
+		Identifier blockId = BuiltInRegistries.BLOCK.getKey(info.state().getBlock());
 		if (!BRASS_AGE_NAMESPACES.contains(blockId.getNamespace())) {
 			return info;
 		}
@@ -87,7 +87,7 @@ public final class BrassAgeCompatibility {
 
 		BlockState replacement = replacementState(config.replacementBlock());
 		if (CreateStructuresAriseServerConfig.data().logBlocked() || CreateStructuresAriseServerConfig.data().logAllowed()) {
-			ResourceLocation templateId = StructureGenerationContext.getTemplate();
+			Identifier templateId = StructureGenerationContext.getTemplate();
 			CreateStructuresAriseMod.LOGGER.info(
 					"CSA Brass Age replacement: template={}, pos={}, original_block={}, replacement_block={}, category={}",
 					templateId != null ? templateId : "<unknown>",
@@ -109,8 +109,8 @@ public final class BrassAgeCompatibility {
 
 	private static BlockState replacementState(String configuredBlock) {
 		try {
-			ResourceLocation id = new ResourceLocation(configuredBlock);
-			Block block = BuiltInRegistries.BLOCK.get(id);
+			Identifier id = Identifier.parse(configuredBlock);
+			Block block = BuiltInRegistries.BLOCK.getValue(id);
 			if (block != Blocks.AIR || "minecraft:air".equals(id.toString())) {
 				return block.defaultBlockState();
 			}

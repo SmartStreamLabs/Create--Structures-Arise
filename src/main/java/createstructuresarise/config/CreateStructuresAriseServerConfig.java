@@ -14,15 +14,15 @@ import java.util.Set;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.FMLPaths;
 
 public final class CreateStructuresAriseServerConfig {
 	private static final Path CONFIG_PATH = FMLPaths.CONFIGDIR.get().resolve("create_structures_arise-server.toml");
-	private static final Map<ResourceLocation, StructureDefaults> DEFAULTS = createDefaults();
-	private static final Set<ResourceLocation> AIRBORNE_STRUCTURES = Set.of(id("createairdrop"), id("createminiskyvillage"), id("pillagersteampunkairship"));
+	private static final Map<Identifier, StructureDefaults> DEFAULTS = createDefaults();
+	private static final Set<Identifier> AIRBORNE_STRUCTURES = Set.of(id("createairdrop"), id("createminiskyvillage"), id("pillagersteampunkairship"));
 	private static final TagKey<Biome> AIRBORNE_MOUNTAIN_BIOMES = biomeTag("airborne_structure_avoid_biomes");
 	private static final TagKey<Biome> AIRBORNE_TECTONIC_MOUNTAIN_BIOMES = biomeTag("airborne_structure_avoid_tectonic_biomes");
 	private static final TagKey<Biome> AIRBORNE_TERRALITH_MOUNTAIN_BIOMES = biomeTag("airborne_structure_avoid_terralith_biomes");
@@ -51,19 +51,19 @@ public final class CreateStructuresAriseServerConfig {
 		return data;
 	}
 
-	public static Map<ResourceLocation, StructureDefaults> defaults() {
+	public static Map<Identifier, StructureDefaults> defaults() {
 		return DEFAULTS;
 	}
 
-	public static boolean isAirborneStructure(ResourceLocation structureId) {
+	public static boolean isAirborneStructure(Identifier structureId) {
 		return AIRBORNE_STRUCTURES.contains(structureId);
 	}
 
-	public static StructureConfig structure(ResourceLocation structureId) {
+	public static StructureConfig structure(Identifier structureId) {
 		return data.structures().getOrDefault(structureId, StructureConfig.fromDefaults(DEFAULTS.get(structureId)));
 	}
 
-	public static int effectiveSpacing(ResourceLocation structureId, int fallbackSpacing, int fallbackSeparation) {
+	public static int effectiveSpacing(Identifier structureId, int fallbackSpacing, int fallbackSeparation) {
 		ConfigData snapshot = data;
 		StructureConfig config = snapshot.structures().get(structureId);
 		int configuredSpacing = config != null ? config.spacing() : fallbackSpacing;
@@ -77,12 +77,12 @@ public final class CreateStructuresAriseServerConfig {
 		return Math.max(configuredSeparation + 1, Math.max(1, scaled));
 	}
 
-	public static int effectiveSeparation(ResourceLocation structureId, int fallbackSeparation) {
+	public static int effectiveSeparation(Identifier structureId, int fallbackSeparation) {
 		StructureConfig config = data.structures().get(structureId);
 		return config != null ? config.separation() : fallbackSeparation;
 	}
 
-	public static BlockDecision canGenerate(ResourceLocation structureId, ResourceLocation dimensionId, Holder<Biome> biome, Registry<Biome> biomeRegistry, TerrainSample terrainSample) {
+	public static BlockDecision canGenerate(Identifier structureId, Identifier dimensionId, Holder<Biome> biome, Registry<Biome> biomeRegistry, TerrainSample terrainSample) {
 		ConfigData snapshot = data;
 		StructureConfig config = snapshot.structures().get(structureId);
 		if (config == null) {
@@ -142,12 +142,12 @@ public final class CreateStructuresAriseServerConfig {
 			}
 			try {
 				if (trimmed.startsWith("#")) {
-					ResourceLocation tagId = new ResourceLocation(trimmed.substring(1));
+					Identifier tagId = Identifier.parse(trimmed.substring(1));
 					if (biome.is(TagKey.create(Registries.BIOME, tagId))) {
 						return true;
 					}
 				} else {
-					ResourceLocation biomeId = new ResourceLocation(trimmed);
+					Identifier biomeId = Identifier.parse(trimmed);
 					if (biomeRegistry.getKey(biome.value()).equals(biomeId)) {
 						return true;
 					}
@@ -178,7 +178,7 @@ public final class CreateStructuresAriseServerConfig {
 				readBoolean(config, List.of("compatibility", "worldgen", "blacklist_tectonic_mountain_biomes"), true),
 				readBoolean(config, List.of("compatibility", "worldgen", "blacklist_terralith_mountain_biomes"), true),
 				readBoolean(config, List.of("compatibility", "worldgen", "blacklist_biomes_o_plenty_mountain_biomes"), true));
-		Map<ResourceLocation, StructureConfig> structures = new LinkedHashMap<>();
+		Map<Identifier, StructureConfig> structures = new LinkedHashMap<>();
 
 		for (StructureDefaults defaults : DEFAULTS.values()) {
 			List<String> base = List.of("structures", defaults.id().getPath());
@@ -307,8 +307,8 @@ public final class CreateStructuresAriseServerConfig {
 		return path;
 	}
 
-	private static Map<ResourceLocation, StructureDefaults> createDefaults() {
-		Map<ResourceLocation, StructureDefaults> defaults = new LinkedHashMap<>();
+	private static Map<Identifier, StructureDefaults> createDefaults() {
+		Map<Identifier, StructureDefaults> defaults = new LinkedHashMap<>();
 		add(defaults, "chocolate_pit", 1, 130, 10);
 		add(defaults, "create_bastion", 1, 100, 10);
 		add(defaults, "create_copper_statue", 1, 90, 15);
@@ -340,20 +340,20 @@ public final class CreateStructuresAriseServerConfig {
 		return Map.copyOf(defaults);
 	}
 
-	private static void add(Map<ResourceLocation, StructureDefaults> defaults, String id, int weight, int spacing, int separation) {
-		ResourceLocation structureId = id(id);
+	private static void add(Map<Identifier, StructureDefaults> defaults, String id, int weight, int spacing, int separation) {
+		Identifier structureId = id(id);
 		defaults.put(structureId, new StructureDefaults(structureId, weight, spacing, separation));
 	}
 
-	private static ResourceLocation id(String path) {
-		return new ResourceLocation(CreateStructuresAriseMod.MODID, path);
+	private static Identifier id(String path) {
+		return Identifier.fromNamespaceAndPath(CreateStructuresAriseMod.MODID, path);
 	}
 
 	private static TagKey<Biome> biomeTag(String path) {
-		return TagKey.create(Registries.BIOME, new ResourceLocation(CreateStructuresAriseMod.MODID, path));
+		return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(CreateStructuresAriseMod.MODID, path));
 	}
 
-	public record StructureDefaults(ResourceLocation id, int weight, int spacing, int separation) {
+	public record StructureDefaults(Identifier id, int weight, int spacing, int separation) {
 	}
 
 	public record StructureConfig(
@@ -378,9 +378,9 @@ public final class CreateStructuresAriseServerConfig {
 			boolean logAllowed,
 			BrassAgeCompatibilityConfig brassAgeCompatibility,
 			WorldgenCompatibilityConfig worldgenCompatibility,
-			Map<ResourceLocation, StructureConfig> structures) {
-		static ConfigData defaults(Map<ResourceLocation, StructureDefaults> defaults) {
-			Map<ResourceLocation, StructureConfig> structures = new LinkedHashMap<>();
+			Map<Identifier, StructureConfig> structures) {
+		static ConfigData defaults(Map<Identifier, StructureDefaults> defaults) {
+			Map<Identifier, StructureConfig> structures = new LinkedHashMap<>();
 			defaults.forEach((id, value) -> structures.put(id, StructureConfig.fromDefaults(value)));
 			return new ConfigData(true, 1.0D, SpawnRatesConfig.defaults(), false, false, BrassAgeCompatibilityConfig.defaults(), WorldgenCompatibilityConfig.defaults(), Map.copyOf(structures));
 		}
